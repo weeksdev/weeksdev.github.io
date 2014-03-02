@@ -1,0 +1,230 @@
+﻿html{
+  background: url(background.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: open_sanslight, helvita;
+  font-weight: 100;
+}
+.snap {
+    /*padding-top: 10px;*/
+    /*background-image: url('../images/snapline.png');*/
+    /*background-position: right top;
+    background-repeat: no-repeat;*/
+}
+
+/*.circle
+{
+width:250px;
+height:250px;
+border-radius:125px;
+font-size:50px;
+color:#fff;
+line-height:250px;
+text-align:center;
+background:#000
+}*/
+.wrapper{
+	width:800px;
+	margin:0 auto;
+	text-align:center;
+	color:#DBDCE5;
+}
+.header{
+	height:40px;
+	width:890px;
+    left:230px;
+	/*margin:0 auto;*/
+    position:absolute;
+	/*margin:-10px;*/
+	background-color:#D7E9ED;
+	/*text-align:center;*/
+	/*color:white;*/
+	/*width:75px;*/
+}
+.goHome a{
+    /*background-color:black;*/
+    color:white !important;
+    margin:7px;
+    height:10px;
+    width:60px;
+}
+    /*.header:hover ~ .buttonStyle {
+        height:50px;
+    }*/
+/*.headerButton{
+	background-color:black;
+	color:#DBDCE5;
+	display:inline;
+}*/
+.otherSide{
+	display: inline;
+	text-align:right;
+	padding-left: 520px;
+	/*padding:0px 10px 0px;
+	background-color:lightgray;*/
+}
+.firstName{
+	padding:5px 0px 30px 10px;
+	font-size:30px;
+	font-weight: lighter;
+	display:inline;
+}
+.lastName{
+	padding:5px 5px 10px;
+	font-size:30px;
+	font-weight: bold;
+	display:inline;
+}
+h1{
+	font-size: 112px;
+	font-family: 'dolce_vita_lightsuper_light';
+	color:#D7E9ED;
+	margin:100px 0px -20px 0px;
+	/*letter-spacing: -7px;*/
+}
+h2{
+	margin:-20px 0px -20px 0px;
+	font-size: 24px;
+	font-family: dolce_vita_lightsuper_light;
+	/*letter-spacing: -7px;*/
+}
+a {
+    text-decoration:none;
+    color:black;
+}
+a:visited {
+    text-decoration:none;
+}
+a:link {
+    text-decoration:none;
+}
+.buttonStyle {
+    background-color:#1C2329;
+    color:#1C2329;
+	padding:5px 5px;
+	font-size:14px;
+    font-style:normal;
+    text-align:left;
+	border:0px solid #1A87B9;
+}
+.buttonStyle:hover {
+	background:#E82C0C;
+	padding:5px 5px;
+	color:white;
+	font-size:14px;
+	border-radius:0px;
+	-moz-border-radius:0px;
+	-webkit-border-radius:0px;
+	border:0px solid #1A87B9;
+    cursor: pointer;
+}
+.buttonStyle:active {
+	background:#A66E6D;
+}
+.navArrow {
+    margin:365px auto;
+	width: 0; 
+	height: 0;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 20px solid gray;
+}
+.spacer {
+    height:1px;
+}
+.sectionTwo {
+    margin:600px -8px 0px -8px; 
+    width:auto; 
+    height:800px;
+    background-color:#1C2329;
+}
+.sectionTwo h1 {
+    font-size:30px;
+    text-align:center;
+    padding:20px 10px 10px;
+    /*color:#F27A55;*/
+}
+
+.sectionTwo .box {
+    display:inline;
+    float:left;
+    margin:0px 0px 0px 125px;
+    height:400px;
+    width:50%;
+    overflow:hidden;
+}
+.sectionTwo .box2 {    
+    display:inline;
+    padding:20px;
+    height:400px;
+    width:50%;
+    overflow:hidden;
+}
+.sectionTwo .box .boxTitle {
+        color:white;
+        font-size:24px;
+        padding:0px 30px 0px;
+        /*padding:30px;*/
+    }
+.sectionTwo .box2 .boxTitle {
+    color:white;
+    font-size:24px;
+    /*padding:30px;*/
+}
+.sectionTwo .box2 .boxSection {
+    display:inline;
+    color:lightgray;
+    font-size:14px;
+    /*padding:30px;*/
+}
+.inBetweenSections {
+    margin:0px -8px 0px -8px; 
+    width:auto; 
+    height:50px;
+    background-color:#DBDCE5;
+}
+.sectionThree {
+    margin:0px -8px 0px ; 
+    width:auto; 
+    height:800px;
+    background-color:#F09C54;
+}
+.orangeWhiteBox {
+    left:20px;
+    top:10px;
+    /*float:left;*/
+    position:relative;
+    padding:10px;
+    border-color:white;
+    border-style:solid;
+    border-width:5px;
+    border-radius:4px;
+}
+.orangeWhiteBoxNotFixed {
+    position:relative;
+    left:20px;
+    top:10px;
+    float:left;
+    padding:10px;
+    border-color:white;
+    border-style:solid;
+    border-width:5px;
+    border-radius:4px;
+    color:white;
+    font-weight:900;
+}
+.orangeBig {
+    font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size:40px;
+    padding:10px;
+    color:white;
+}
+.orangeSmall {
+    font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size:20px;
+    padding:10px;
+    color:white;
+    background-color:gray;
+}
