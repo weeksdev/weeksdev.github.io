@@ -326,6 +326,7 @@
       border-radius: var(--rl); padding: 1.75rem;
       display: flex; flex-direction: column; gap: .9rem;
       transition: all .3s; position: relative; overflow: hidden;
+      color: inherit;
     }
     .proj-card::after {
       content: ''; position: absolute; top: 0; left: 0; right: 0;
@@ -333,10 +334,16 @@
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       transform: scaleX(0); transform-origin: left; transition: transform .35s;
     }
-    .proj-card:hover::after { transform: scaleX(1); }
-    .proj-card:hover {
+    .proj-card:hover::after,
+    .proj-card:focus-visible::after { transform: scaleX(1); }
+    .proj-card:hover,
+    .proj-card:focus-visible {
       border-color: var(--border-h); transform: translateY(-5px);
       box-shadow: var(--glow);
+    }
+    .proj-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
     }
     .proj-top {
       display: flex; align-items: flex-start; justify-content: space-between;
@@ -345,7 +352,8 @@
     .proj-ext-link {
       color: var(--text-3); transition: color .2s;
     }
-    .proj-ext-link:hover { color: var(--accent); }
+    .proj-card:hover .proj-ext-link,
+    .proj-card:focus-visible .proj-ext-link { color: var(--accent); }
     .proj-ext-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
     .proj-name {
       font-size: 1rem; font-weight: 600; color: var(--text-1);
@@ -360,6 +368,37 @@
       border: 1px solid rgba(0,212,255,.18);
       border-radius: 4px;
       font-family: var(--mono); font-size: .68rem; color: var(--accent);
+    }
+
+    /* ─── Live websites ──────────────────────────────────────── */
+    .sites-intro {
+      max-width: 640px; margin: -2rem 0 2.2rem;
+      color: var(--text-2); line-height: 1.8;
+    }
+    .sites-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem;
+    }
+    .site-card { min-height: 275px; }
+    .site-card::before {
+      content: ''; position: absolute; width: 180px; height: 180px;
+      right: -70px; top: -80px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,.10), transparent 70%);
+      pointer-events: none;
+    }
+    .site-card.audioze::before {
+      background: radial-gradient(circle, rgba(129,140,248,.16), transparent 70%);
+    }
+    .site-kicker {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--mono); font-size: .68rem; color: var(--green);
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+    .site-kicker::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 7px var(--green);
+    }
+    .site-domain {
+      font-family: var(--mono); font-size: .75rem; color: var(--text-3);
     }
 
     /* ─── Certifications ─────────────────────────────────────── */
@@ -435,11 +474,17 @@
     .reveal-delay-4 { transition-delay: .4s; }
 
     /* ─── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 960px) and (min-width: 769px) {
+      nav { justify-content: center; padding: 0 1rem; }
+      .nav-logo { display: none; }
+      .nav-links { gap: 1rem; }
+    }
     @media (max-width: 768px) {
       nav { padding: 0 1.25rem; }
       .nav-links { display: none; }
       section { padding: 4rem 1.25rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .sites-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; gap: .75rem; text-align: center; }
       .hero-ctas { flex-direction: column; align-items: flex-start; }
     }
@@ -458,8 +503,9 @@
     <li><a href="#skills"><span class="num">02.</span>Skills</a></li>
     <li><a href="#experience"><span class="num">03.</span>Experience</a></li>
     <li><a href="#projects"><span class="num">04.</span>Projects</a></li>
-    <li><a href="#certifications"><span class="num">05.</span>Certs</a></li>
-    <li><a href="#contact"><span class="num">06.</span>Contact</a></li>
+    <li><a href="#sites"><span class="num">05.</span>Live Sites</a></li>
+    <li><a href="#certifications"><span class="num">06.</span>Certs</a></li>
+    <li><a href="#contact"><span class="num">07.</span>Contact</a></li>
   </ul>
 </nav>
 
@@ -553,7 +599,7 @@
           <div class="stat-lbl">Years Coding</div>
         </div>
         <div class="stat-card">
-          <div class="stat-val">37</div>
+          <div class="stat-val">39</div>
           <div class="stat-lbl">GitHub Repos</div>
         </div>
         <div class="stat-card">
@@ -582,6 +628,7 @@
         <div class="skill-group-title">Languages</div>
         <div class="tags">
           <span class="tag"><span class="d"></span>Python</span>
+          <span class="tag"><span class="d"></span>Rust</span>
           <span class="tag"><span class="d"></span>C#</span>
           <span class="tag"><span class="d"></span>TypeScript</span>
           <span class="tag"><span class="d"></span>JavaScript</span>
@@ -700,97 +747,165 @@
     </div>
     <div class="projects-grid">
 
-      <div class="proj-card reveal">
+      <a href="https://github.com/weeksdev/junebug-cli" target="_blank" rel="noopener noreferrer"
+         class="proj-card reveal" aria-label="View Junebug CLI on GitHub">
         <div class="proj-top">
-          <span class="proj-icon">📄</span>
-          <a href="https://resumeretriever.com" target="_blank" class="proj-ext-link" title="Visit site">
+          <span class="proj-icon">🐞</span>
+          <span class="proj-ext-link" aria-hidden="true">
             <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
+          </span>
         </div>
-        <div class="proj-name">Resume Retriever</div>
-        <div class="proj-desc">Side project and current focus — a tool for managing and surfacing resumes intelligently. Check out the live site.</div>
+        <div class="proj-name">Junebug CLI</div>
+        <div class="proj-desc">A safe, local-first AI coding agent with multi-provider models, permission controls, workspace checkpoints, resumable sessions, and model swarms.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Rust</span>
+          <span class="proj-tag">AI Agents</span>
+          <span class="proj-tag">CLI</span>
+        </div>
+      </a>
+
+      <a href="https://github.com/weeksdev/signal_dark" target="_blank" rel="noopener noreferrer"
+         class="proj-card reveal reveal-delay-1" aria-label="View Signal Dark on GitHub">
+        <div class="proj-top">
+          <span class="proj-icon">🕶️</span>
+          <span class="proj-ext-link" aria-hidden="true">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </span>
+        </div>
+        <div class="proj-name">Signal Dark</div>
+        <div class="proj-desc">A top-down stealth-action game with hand-authored story zones, seeded arcade runs, seven enemy types, hacking, and macOS and iOS builds.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Godot 4</span>
+          <span class="proj-tag">GDScript</span>
+          <span class="proj-tag">Game Dev</span>
+        </div>
+      </a>
+
+      <a href="https://github.com/weeksdev/acuity-dark-research" target="_blank" rel="noopener noreferrer"
+         class="proj-card reveal reveal-delay-2" aria-label="View Acuity Dark Research on GitHub">
+        <div class="proj-top">
+          <span class="proj-icon">👁️</span>
+          <span class="proj-ext-link" aria-hidden="true">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </span>
+        </div>
+        <div class="proj-name">Acuity Dark Research</div>
+        <div class="proj-desc">An accessibility-driven VS Code theme built from measurable contrast, semantic redundancy, and simulated color-vision separation.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">VS Code</span>
+          <span class="proj-tag">Accessibility</span>
+          <span class="proj-tag">Python</span>
+        </div>
+      </a>
+
+      <a href="https://github.com/weeksdev/simple-editor" target="_blank" rel="noopener noreferrer"
+         class="proj-card reveal" aria-label="View Simple Editor on GitHub">
+        <div class="proj-top">
+          <span class="proj-icon">🌈</span>
+          <span class="proj-ext-link" aria-hidden="true">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </span>
+        </div>
+        <div class="proj-name">Simple Editor</div>
+        <div class="proj-desc">A lightweight cross-platform plain-text editor that strips paste formatting and adds a subtle, configurable animated border.</div>
         <div class="proj-tags">
           <span class="proj-tag">Python</span>
-          <span class="proj-tag">Next.js</span>
-          <span class="proj-tag">FastAPI</span>
+          <span class="proj-tag">PyQt6</span>
+          <span class="proj-tag">Desktop</span>
         </div>
-      </div>
+      </a>
 
-      <div class="proj-card reveal reveal-delay-1">
+      <a href="https://github.com/weeksdev/StoreForm" target="_blank" rel="noopener noreferrer"
+         class="proj-card reveal reveal-delay-1" aria-label="View StoreForm on GitHub">
         <div class="proj-top">
           <span class="proj-icon">🔌</span>
-          <a href="https://github.com/weeksdev/StoreForm" target="_blank" class="proj-ext-link" title="GitHub">
+          <span class="proj-ext-link" aria-hidden="true">
             <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
+          </span>
         </div>
         <div class="proj-name">StoreForm</div>
-        <div class="proj-desc">ExtJS 4 extension that binds data stores to forms with pagination — filling a real gap in the framework's out-of-the-box functionality.</div>
+        <div class="proj-desc">A legacy open-source ExtJS extension that binds data stores to editable forms with built-in record pagination.</div>
         <div class="proj-tags">
           <span class="proj-tag">JavaScript</span>
           <span class="proj-tag">ExtJS</span>
+          <span class="proj-tag">Open Source</span>
         </div>
-      </div>
+      </a>
 
-      <div class="proj-card reveal reveal-delay-2">
-        <div class="proj-top">
-          <span class="proj-icon">🧩</span>
-          <a href="https://github.com/weeksdev/ExtJS-Def-Build" target="_blank" class="proj-ext-link" title="GitHub">
-            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-        </div>
-        <div class="proj-name">ExtJS Def Builder</div>
-        <div class="proj-desc">Chrome extension for building ExtJS class definitions — a developer productivity tool built to scratch my own itch.</div>
-        <div class="proj-tags">
-          <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">Chrome Extension</span>
-        </div>
-      </div>
-
-      <div class="proj-card reveal">
-        <div class="proj-top">
-          <span class="proj-icon">🧪</span>
-          <a href="https://github.com/weeksdev/resttester" target="_blank" class="proj-ext-link" title="GitHub">
-            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-        </div>
-        <div class="proj-name">REST Tester</div>
-        <div class="proj-desc">Lightweight REST API testing tool written in C# — built before Postman was everywhere.</div>
-        <div class="proj-tags">
-          <span class="proj-tag">C#</span>
-          <span class="proj-tag">REST</span>
-        </div>
-      </div>
-
-      <div class="proj-card reveal reveal-delay-1">
-        <div class="proj-top">
-          <span class="proj-icon">📊</span>
-          <a href="https://github.com/weeksdev/Excel.Json" target="_blank" class="proj-ext-link" title="GitHub">
-            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-        </div>
-        <div class="proj-name">Excel.Json</div>
-        <div class="proj-desc">JSON request class for Excel — bridging spreadsheet workflows with modern data formats for finance folks who live in Excel.</div>
-        <div class="proj-tags">
-          <span class="proj-tag">C#</span>
-          <span class="proj-tag">JSON</span>
-          <span class="proj-tag">Excel</span>
-        </div>
-      </div>
-
-      <div class="proj-card reveal reveal-delay-2">
+      <a href="https://github.com/weeksdev" target="_blank" rel="noopener noreferrer"
+         class="proj-card reveal reveal-delay-2" aria-label="See more projects on GitHub">
         <div class="proj-top">
           <span class="proj-icon">🚀</span>
-          <a href="https://github.com/weeksdev" target="_blank" class="proj-ext-link" title="GitHub">
+          <span class="proj-ext-link" aria-hidden="true">
             <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
+          </span>
         </div>
         <div class="proj-name">More on GitHub</div>
-        <div class="proj-desc">37 public repositories — demos, experiments, and tools. Angular + Bootstrap kitchen sinks, ExtJS Reddit clients, and more.</div>
+        <div class="proj-desc">39 public repositories spanning developer tools, desktop apps, full-stack experiments, games, and earlier open-source work.</div>
         <div class="proj-tags">
           <span class="proj-tag">Various</span>
           <span class="proj-tag">Open Source</span>
         </div>
-      </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── LIVE WEBSITES ───────────────────────── -->
+<section id="sites">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <span class="sec-num">05.</span>
+      <h2 class="sec-title">Live Websites</h2>
+      <div class="sec-line"></div>
+    </div>
+    <p class="sites-intro reveal">
+      Products I designed, built, and shipped — available now on the public web.
+    </p>
+    <div class="sites-grid">
+
+      <a href="https://audioze.net" target="_blank" rel="noopener noreferrer"
+         class="proj-card site-card audioze reveal" aria-label="Visit Audioze">
+        <div class="proj-top">
+          <span class="proj-icon">🎚️</span>
+          <span class="proj-ext-link" aria-hidden="true">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </span>
+        </div>
+        <div class="site-kicker">Live product</div>
+        <div>
+          <div class="proj-name">Audioze</div>
+          <div class="site-domain">audioze.net</div>
+        </div>
+        <div class="proj-desc">Splits a track into six clean stems, detects BPM and key, and delivers grid-aligned REAPER and Ableton projects ready to mix.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">AI Audio</span>
+          <span class="proj-tag">GPU Processing</span>
+          <span class="proj-tag">DAW Workflow</span>
+        </div>
+      </a>
+
+      <a href="https://resumeretriever.com" target="_blank" rel="noopener noreferrer"
+         class="proj-card site-card reveal reveal-delay-1" aria-label="Visit Resume Retriever">
+        <div class="proj-top">
+          <span class="proj-icon">📄</span>
+          <span class="proj-ext-link" aria-hidden="true">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </span>
+        </div>
+        <div class="site-kicker">Live product</div>
+        <div>
+          <div class="proj-name">Resume Retriever</div>
+          <div class="site-domain">resumeretriever.com</div>
+        </div>
+        <div class="proj-desc">An AI resume builder that tailors a resume to a job description, optimizes it for ATS screening, and exports editable Word or PDF files.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Next.js</span>
+          <span class="proj-tag">FastAPI</span>
+          <span class="proj-tag">Applied AI</span>
+        </div>
+      </a>
 
     </div>
   </div>
@@ -800,7 +915,7 @@
 <section id="certifications">
   <div class="section-wrap">
     <div class="section-head reveal">
-      <span class="sec-num">05.</span>
+      <span class="sec-num">06.</span>
       <h2 class="sec-title">Certifications</h2>
       <div class="sec-line"></div>
     </div>
@@ -855,7 +970,7 @@
 <section id="contact">
   <div class="section-wrap">
     <div class="section-head reveal" style="justify-content:center">
-      <span class="sec-num">06.</span>
+      <span class="sec-num">07.</span>
       <h2 class="sec-title">Get In Touch</h2>
       <div class="sec-line"></div>
     </div>
