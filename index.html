@@ -3,202 +3,77 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Andrew Weeks — Agent Systems, Software Factories, Engineering</title>
-  <meta name="description" content="Andrew Weeks (@weeksdev) builds agentic software systems, coding agents, multi-agent workflows, developer tools, and production engineering platforms.">
+  <title>Human In The Loop — Andrew Weeks | Agent Systems & Software Factories</title>
+  <meta name="description" content="Andrew Weeks (@weeksdev) builds coding agents, multi-agent systems, software factories, model routing, and production engineering platforms with humans kept where judgment matters.">
   <meta name="theme-color" content="#05080d">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#05080d;--bg2:#080e17;--card:#0b131f;--card2:#0e1928;
-      --text:#f2f7fb;--muted:#94a7bb;--dim:#60758d;--line:#1b2a3a;
-      --cyan:#55e8ff;--green:#62f5ad;--violet:#a78bfa;--amber:#ffc66d;
-      --mono:"JetBrains Mono",monospace;--sans:"Inter",system-ui,sans-serif;
-    }
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:var(--sans);line-height:1.6;background:
-      radial-gradient(circle at 82% -10%,rgba(85,232,255,.10),transparent 30rem),
-      radial-gradient(circle at -10% 42%,rgba(167,139,250,.09),transparent 30rem),var(--bg)}
-    a{color:inherit;text-decoration:none}.wrap{width:min(1160px,calc(100% - 40px));margin:auto}.mono{font-family:var(--mono)}
-    .eyebrow{font:600 .7rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
-    .topbar{position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(5,8,13,.78);backdrop-filter:blur(18px)}
-    .nav{height:66px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{font:600 .9rem/1 var(--mono)}.brand span{color:var(--cyan)}
-    .navlinks{display:flex;gap:22px;font:500 .74rem/1 var(--mono);color:var(--muted)}.navlinks a:hover{color:var(--text)}
-    .hero{min-height:91vh;display:grid;grid-template-columns:1.12fr .88fr;gap:64px;align-items:center;padding:90px 0 72px}
-    .hero h1{font-size:clamp(3.5rem,7.7vw,7rem);line-height:.93;letter-spacing:-.065em;margin:18px 0 24px;max-width:850px}
-    .hero h1 .accent{color:var(--cyan)}.lede{font-size:clamp(1.03rem,1.8vw,1.22rem);color:var(--muted);max-width:760px;margin:0}.lede strong{color:var(--text);font-weight:600}
-    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--line);border-radius:10px;font:600 .78rem/1 var(--mono);transition:.2s}.btn:hover{transform:translateY(-2px);border-color:var(--cyan)}.btn.primary{background:var(--cyan);border-color:var(--cyan);color:#031015}
-    .proof{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}.pill{padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(11,19,31,.66);font:500 .67rem/1 var(--mono);color:#aabacc}.pill b{color:var(--green);font-weight:600}
-
-    .agent-console{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(14,25,40,.96),rgba(7,13,22,.96));box-shadow:0 26px 90px rgba(0,0,0,.42);overflow:hidden}
-    .console-head{height:44px;display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid var(--line);font:500 .68rem/1 var(--mono);color:var(--dim)}
-    .dot{width:9px;height:9px;border-radius:50%;background:#314157}.dot.r{background:#ff6b6b}.dot.y{background:#ffd166}.dot.g{background:#63e6be}.console-title{margin-left:auto}
-    .orchestrator{padding:22px}.flow{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px}.flow::before{content:"";position:absolute;left:50%;top:54px;bottom:54px;width:1px;background:linear-gradient(var(--cyan),var(--violet));opacity:.3}
-    .node{position:relative;border:1px solid var(--line);border-radius:12px;padding:14px;background:#09111b;min-height:88px}.node.primary{grid-column:1/-1;border-color:rgba(85,232,255,.35);background:linear-gradient(180deg,rgba(85,232,255,.06),#09111b)}
-    .node .role{font:600 .64rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}.node h3{font-size:.95rem;margin:8px 0 4px}.node p{margin:0;color:var(--dim);font:500 .68rem/1.45 var(--mono)}
-    .pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 14px rgba(98,245,173,.8);margin-right:6px;animation:pulse 1.7s ease-in-out infinite}@keyframes pulse{50%{opacity:.35;transform:scale(.7)}}
-    .eventlog{border-top:1px solid var(--line);padding:15px 18px 17px;font:500 .69rem/1.6 var(--mono);color:var(--muted);min-height:108px}.eventlog .time{color:var(--dim)}.eventlog .ok{color:var(--green)}.eventlog .route{color:var(--violet)}
-
-    section{padding:92px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:32px;margin-bottom:32px}.section-head h2{font-size:clamp(2.1rem,4vw,3.5rem);line-height:1;letter-spacing:-.045em;margin:10px 0 0}.section-head p{max-width:540px;color:var(--muted);margin:0}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,rgba(14,25,40,.83),rgba(8,14,23,.9));border-radius:17px;padding:24px;overflow:hidden;transition:.25s}.card:hover{transform:translateY(-4px);border-color:#33546e}
-    .card::after{content:"";position:absolute;width:220px;height:160px;right:-80px;bottom:-100px;background:radial-gradient(circle,rgba(85,232,255,.09),transparent 70%);pointer-events:none}
-    .agent-card{grid-column:span 4;min-height:260px}.agent-card.wide{grid-column:span 8}.num{font:600 .66rem/1 var(--mono);color:var(--violet);letter-spacing:.1em}.agent-card h3{font-size:1.35rem;letter-spacing:-.025em;margin:16px 0 9px}.agent-card p{color:var(--muted);margin:0 0 18px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:#08101a;color:#9fb3c8;font:500 .66rem/1 var(--mono)}
-    .project{grid-column:span 6;min-height:252px}.project h3{font-size:1.45rem;margin:13px 0 8px;letter-spacing:-.025em}.project p{color:var(--muted);margin:0 0 18px}.project .arrow{position:absolute;right:22px;top:20px;color:var(--dim);font-size:1.2rem}.project:hover .arrow{color:var(--cyan)}.kicker{font:600 .67rem/1 var(--mono);text-transform:uppercase;letter-spacing:.11em;color:var(--cyan)}
-    .factory{border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,rgba(85,232,255,.055),rgba(167,139,250,.055));padding:30px}.factory-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:24px}.stage{border:1px solid var(--line);border-radius:12px;padding:16px;background:#08101a}.stage b{display:block;font:600 .72rem/1.2 var(--mono);color:var(--text);margin-bottom:8px}.stage span{display:block;color:var(--dim);font-size:.78rem}.stage .snum{color:var(--cyan);font:600 .62rem/1 var(--mono);margin-bottom:10px}
-    .career{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:start}.career h2{font-size:clamp(2.3rem,4.8vw,4rem);line-height:1;letter-spacing:-.05em;margin:12px 0 20px}.career p{color:var(--muted)}
-    .timeline{border-left:1px solid var(--line);padding-left:28px}.job{position:relative;padding-bottom:30px}.job::before{content:"";position:absolute;left:-34px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px rgba(85,232,255,.45)}.job .date{font:500 .66rem/1 var(--mono);color:var(--dim);letter-spacing:.08em;text-transform:uppercase}.job h3{font-size:1.2rem;margin:8px 0 3px}.job .company{color:var(--cyan);font:500 .76rem/1.2 var(--mono);margin-bottom:10px}.job p{margin:0;color:var(--muted)}
-    .stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.stack span{padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#08101a;color:#a8b9cb;font:500 .68rem/1 var(--mono)}
-    .cta{border:1px solid var(--line);background:linear-gradient(135deg,rgba(85,232,255,.08),rgba(167,139,250,.08));border-radius:20px;padding:42px;display:flex;align-items:center;justify-content:space-between;gap:32px}.cta h2{font-size:clamp(2rem,4vw,3.3rem);line-height:1.05;letter-spacing:-.04em;margin:0 0 10px}.cta p{color:var(--muted);margin:0;max-width:680px}
-    footer{padding:28px 0 42px;color:var(--dim);font:500 .68rem/1.5 var(--mono)}.foot{display:flex;justify-content:space-between;gap:20px}.reveal{opacity:0;transform:translateY(14px);transition:.6s ease}.reveal.on{opacity:1;transform:none}
-    @media(max-width:930px){.hero{grid-template-columns:1fr;min-height:auto}.agent-card,.agent-card.wide,.project{grid-column:span 12}.factory-grid{grid-template-columns:1fr 1fr}.career{grid-template-columns:1fr}.navlinks{display:none}}
-    @media(max-width:600px){.wrap{width:min(100% - 28px,1160px)}section{padding:72px 0}.hero{padding-top:78px}.hero h1{font-size:3.35rem}.agent-console{display:none}.factory-grid{grid-template-columns:1fr}.cta{display:block;padding:28px}.cta .actions{margin-top:22px}.foot{display:block}.foot span{display:block;margin-top:8px}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.pulse{animation:none}}
+    :root{--bg:#05080d;--bg2:#080e17;--card:#0b131f;--card2:#0e1928;--text:#f2f7fb;--muted:#94a7bb;--dim:#60758d;--line:#1b2a3a;--cyan:#55e8ff;--green:#62f5ad;--violet:#a78bfa;--amber:#ffc66d;--mono:"JetBrains Mono",monospace;--sans:"Inter",system-ui,sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:var(--sans);line-height:1.6;background:radial-gradient(circle at 82% -10%,rgba(85,232,255,.10),transparent 30rem),radial-gradient(circle at -10% 42%,rgba(167,139,250,.09),transparent 30rem),var(--bg)}
+    a{color:inherit;text-decoration:none}.wrap{width:min(1160px,calc(100% - 40px));margin:auto}.eyebrow{font:600 .7rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+    .topbar{position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(5,8,13,.78);backdrop-filter:blur(18px)}.nav{height:66px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{font:600 .9rem/1 var(--mono)}.brand span{color:var(--cyan)}.navlinks{display:flex;gap:22px;font:500 .74rem/1 var(--mono);color:var(--muted)}.navlinks a:hover{color:var(--text)}
+    .hero{min-height:91vh;display:grid;grid-template-columns:1.12fr .88fr;gap:64px;align-items:center;padding:90px 0 72px}.hero h1{font-size:clamp(3.8rem,8.6vw,7.8rem);line-height:.9;letter-spacing:-.07em;margin:18px 0 20px;max-width:900px}.hero h1 .accent{color:var(--cyan)}.hero-sub{font-size:clamp(1.25rem,2.5vw,1.8rem);line-height:1.25;letter-spacing:-.025em;margin:0 0 18px;max-width:760px;color:#dce8f2}.lede{font-size:clamp(1.02rem,1.7vw,1.18rem);color:var(--muted);max-width:760px;margin:0}.lede strong{color:var(--text);font-weight:600}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--line);border-radius:10px;font:600 .78rem/1 var(--mono);transition:.2s}.btn:hover{transform:translateY(-2px);border-color:var(--cyan)}.btn.primary{background:var(--cyan);border-color:var(--cyan);color:#031015}.proof{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}.pill{padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(11,19,31,.66);font:500 .67rem/1 var(--mono);color:#aabacc}.pill b{color:var(--green);font-weight:600}
+    .agent-console{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(14,25,40,.96),rgba(7,13,22,.96));box-shadow:0 26px 90px rgba(0,0,0,.42);overflow:hidden}.console-head{height:44px;display:flex;align-items:center;gap:8px;padding:0 14px;border-bottom:1px solid var(--line);font:500 .68rem/1 var(--mono);color:var(--dim)}.dot{width:9px;height:9px;border-radius:50%;background:#314157}.dot.r{background:#ff6b6b}.dot.y{background:#ffd166}.dot.g{background:#63e6be}.console-title{margin-left:auto}.orchestrator{padding:22px}.flow{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px}.flow::before{content:"";position:absolute;left:50%;top:104px;bottom:54px;width:1px;background:linear-gradient(var(--amber),var(--cyan),var(--violet));opacity:.3}.node{position:relative;border:1px solid var(--line);border-radius:12px;padding:14px;background:#09111b;min-height:88px}.node.primary{grid-column:1/-1;border-color:rgba(85,232,255,.35);background:linear-gradient(180deg,rgba(85,232,255,.06),#09111b)}.node.human{grid-column:1/-1;border-color:rgba(255,198,109,.45);background:linear-gradient(180deg,rgba(255,198,109,.07),#09111b)}.node.human .role{color:var(--amber)}.node .role{font:600 .64rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}.node h3{font-size:.95rem;margin:8px 0 4px}.node p{margin:0;color:var(--dim);font:500 .68rem/1.45 var(--mono)}.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 14px rgba(98,245,173,.8);margin-right:6px;animation:pulse 1.7s ease-in-out infinite}@keyframes pulse{50%{opacity:.35;transform:scale(.7)}}.eventlog{border-top:1px solid var(--line);padding:15px 18px 17px;font:500 .69rem/1.6 var(--mono);color:var(--muted);min-height:108px}.eventlog .time{color:var(--dim)}.eventlog .ok{color:var(--green)}.eventlog .route{color:var(--violet)}.eventlog .humanlog{color:var(--amber)}
+    section{padding:92px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:32px;margin-bottom:32px}.section-head h2{font-size:clamp(2.1rem,4vw,3.5rem);line-height:1;letter-spacing:-.045em;margin:10px 0 0}.section-head p{max-width:540px;color:var(--muted);margin:0}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,rgba(14,25,40,.83),rgba(8,14,23,.9));border-radius:17px;padding:24px;overflow:hidden;transition:.25s}.card:hover{transform:translateY(-4px);border-color:#33546e}.card::after{content:"";position:absolute;width:220px;height:160px;right:-80px;bottom:-100px;background:radial-gradient(circle,rgba(85,232,255,.09),transparent 70%);pointer-events:none}.agent-card{grid-column:span 4;min-height:260px}.agent-card.wide{grid-column:span 8}.num{font:600 .66rem/1 var(--mono);color:var(--violet);letter-spacing:.1em}.agent-card h3{font-size:1.35rem;letter-spacing:-.025em;margin:16px 0 9px}.agent-card p{color:var(--muted);margin:0 0 18px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:#08101a;color:#9fb3c8;font:500 .66rem/1 var(--mono)}.project{grid-column:span 6;min-height:252px}.project h3{font-size:1.45rem;margin:13px 0 8px;letter-spacing:-.025em}.project p{color:var(--muted);margin:0 0 18px}.project .arrow{position:absolute;right:22px;top:20px;color:var(--dim);font-size:1.2rem}.project:hover .arrow{color:var(--cyan)}.kicker{font:600 .67rem/1 var(--mono);text-transform:uppercase;letter-spacing:.11em;color:var(--cyan)}
+    .factory{border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,rgba(85,232,255,.055),rgba(167,139,250,.055));padding:30px}.factory-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:24px}.stage{border:1px solid var(--line);border-radius:12px;padding:16px;background:#08101a}.stage b{display:block;font:600 .72rem/1.2 var(--mono);color:var(--text);margin-bottom:8px}.stage span{display:block;color:var(--dim);font-size:.78rem}.stage .snum{color:var(--cyan);font:600 .62rem/1 var(--mono);margin-bottom:10px}.career{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:start}.career h2{font-size:clamp(2.3rem,4.8vw,4rem);line-height:1;letter-spacing:-.05em;margin:12px 0 20px}.career p{color:var(--muted)}.timeline{border-left:1px solid var(--line);padding-left:28px}.job{position:relative;padding-bottom:30px}.job::before{content:"";position:absolute;left:-34px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px rgba(85,232,255,.45)}.job .date{font:500 .66rem/1 var(--mono);color:var(--dim);letter-spacing:.08em;text-transform:uppercase}.job h3{font-size:1.2rem;margin:8px 0 3px}.job .company{color:var(--cyan);font:500 .76rem/1.2 var(--mono);margin-bottom:10px}.job p{margin:0;color:var(--muted)}.stack{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.stack span{padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#08101a;color:#a8b9cb;font:500 .68rem/1 var(--mono)}.cta{border:1px solid var(--line);background:linear-gradient(135deg,rgba(85,232,255,.08),rgba(167,139,250,.08));border-radius:20px;padding:42px;display:flex;align-items:center;justify-content:space-between;gap:32px}.cta h2{font-size:clamp(2rem,4vw,3.3rem);line-height:1.05;letter-spacing:-.04em;margin:0 0 10px}.cta p{color:var(--muted);margin:0;max-width:680px}footer{padding:28px 0 42px;color:var(--dim);font:500 .68rem/1.5 var(--mono)}.foot{display:flex;justify-content:space-between;gap:20px}.reveal{opacity:0;transform:translateY(14px);transition:.6s ease}.reveal.on{opacity:1;transform:none}
+    @media(max-width:930px){.hero{grid-template-columns:1fr;min-height:auto}.agent-card,.agent-card.wide,.project{grid-column:span 12}.factory-grid{grid-template-columns:1fr 1fr}.career{grid-template-columns:1fr}.navlinks{display:none}}@media(max-width:600px){.wrap{width:min(100% - 28px,1160px)}section{padding:72px 0}.hero{padding-top:78px}.hero h1{font-size:3.6rem}.agent-console{display:none}.factory-grid{grid-template-columns:1fr}.cta{display:block;padding:28px}.cta .actions{margin-top:22px}.foot{display:block}.foot span{display:block;margin-top:8px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.pulse{animation:none}}
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap nav">
-      <a class="brand" href="#top"><span>@</span>weeksdev</a>
-      <nav class="navlinks" aria-label="Primary"><a href="#agents">agents</a><a href="#factory">factory</a><a href="#work">builds</a><a href="#career">career</a><a href="#contact">contact</a></nav>
-    </div>
-  </header>
-
+  <header class="topbar"><div class="wrap nav"><a class="brand" href="#top"><span>@</span>weeksdev</a><nav class="navlinks" aria-label="Primary"><a href="#agents">agents</a><a href="#factory">factory</a><a href="#work">builds</a><a href="#career">career</a><a href="#contact">contact</a></nav></div></header>
   <main id="top">
     <div class="wrap hero">
       <div>
-        <div class="eyebrow">Agent systems · software factories · production engineering</div>
-        <h1>I build agents that <span class="accent">build software.</span></h1>
-        <p class="lede">I’m Andrew Weeks. I lead engineering at enterprise scale and spend the rest of my time building <strong>coding agents, multi-agent systems, model routers, software factories, and AI-native developer tools.</strong> I care less about demos and more about autonomous systems that can plan, use tools, verify work, recover from failure, and ship something real.</p>
-        <div class="actions">
-          <a class="btn primary" href="#agents">Explore the agent stack →</a>
-          <a class="btn" href="https://github.com/weeksdev" target="_blank" rel="noopener">GitHub ↗</a>
-          <a class="btn" href="https://www.linkedin.com/in/andrew-weeks-12a3377/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        </div>
-        <div class="proof">
-          <span class="pill"><b>●</b> hands-on builder</span>
-          <span class="pill">agent orchestration</span>
-          <span class="pill">tool-using LLMs</span>
-          <span class="pill">local + cloud routing</span>
-          <span class="pill">evaluation loops</span>
-        </div>
+        <div class="eyebrow">Human judgment · agent leverage · production engineering</div>
+        <h1>Human In <span class="accent">The Loop.</span></h1>
+        <p class="hero-sub">I build agents that build software — while keeping people where judgment, intent, and accountability matter.</p>
+        <p class="lede">I’m Andrew Weeks. I lead engineering at enterprise scale and build <strong>coding agents, multi-agent systems, model routers, software factories, and AI-native developer tools.</strong> The machine should handle the repetition, search space, and execution. The human should set direction, define constraints, resolve ambiguity, and own the outcome.</p>
+        <div class="actions"><a class="btn primary" href="#agents">See the agent stack →</a><a class="btn" href="https://github.com/weeksdev" target="_blank" rel="noopener">GitHub ↗</a><a class="btn" href="https://www.linkedin.com/in/andrew-weeks-12a3377/" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+        <div class="proof"><span class="pill"><b>●</b> human-directed autonomy</span><span class="pill">agent orchestration</span><span class="pill">tool-using LLMs</span><span class="pill">local + cloud routing</span><span class="pill">verification loops</span></div>
       </div>
-
-      <aside class="agent-console" aria-label="Agent orchestration diagram">
-        <div class="console-head"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span class="console-title">swarm.run / active</span></div>
-        <div class="orchestrator">
-          <div class="flow">
-            <div class="node primary"><div class="role"><span class="pulse"></span>orchestrator</div><h3>Decompose → route → supervise</h3><p>durable state · permissions · context · recovery</p></div>
-            <div class="node"><div class="role">planner</div><h3>Architecture + tasks</h3><p>scope · dependencies · acceptance criteria</p></div>
-            <div class="node"><div class="role">worker</div><h3>Execute with tools</h3><p>code · shell · files · APIs</p></div>
-            <div class="node"><div class="role">checker</div><h3>Verify independently</h3><p>tests · diff review · evidence</p></div>
-            <div class="node"><div class="role">router</div><h3>Pick the right model</h3><p>cost · latency · capability · hardware</p></div>
-          </div>
-        </div>
-        <div class="eventlog" id="eventlog">
-          <span class="time">14:32:08</span> planner → 6 tasks created<br>
-          <span class="time">14:32:11</span> <span class="route">router → local:qwen / task 01</span><br>
-          <span class="time">14:32:37</span> checker → tests passed <span class="ok">✓</span><br>
-          <span class="time">14:32:39</span> orchestrator → continue <span class="ok">✓</span>
-        </div>
+      <aside class="agent-console" aria-label="Human-directed agent orchestration diagram">
+        <div class="console-head"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span class="console-title">human.loop / active</span></div>
+        <div class="orchestrator"><div class="flow">
+          <div class="node human"><div class="role">human / owner</div><h3>Intent → constraints → judgment</h3><p>sets the goal · defines boundaries · owns the outcome</p></div>
+          <div class="node primary"><div class="role"><span class="pulse"></span>orchestrator</div><h3>Decompose → route → supervise</h3><p>durable state · permissions · context · recovery</p></div>
+          <div class="node"><div class="role">planner</div><h3>Architecture + tasks</h3><p>scope · dependencies · acceptance criteria</p></div>
+          <div class="node"><div class="role">worker</div><h3>Execute with tools</h3><p>code · shell · files · APIs</p></div>
+          <div class="node"><div class="role">checker</div><h3>Verify independently</h3><p>tests · diff review · evidence</p></div>
+          <div class="node"><div class="role">router</div><h3>Pick the right model</h3><p>cost · latency · capability · hardware</p></div>
+        </div></div>
+        <div class="eventlog" id="eventlog"><span class="time">14:32:08</span> <span class="humanlog">human → goal + constraints approved</span><br><span class="time">14:32:11</span> planner → 6 tasks created<br><span class="time">14:32:37</span> checker → tests passed <span class="ok">✓</span><br><span class="time">14:32:39</span> orchestrator → request human decision</div>
       </aside>
     </div>
 
-    <section id="agents">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div><div class="eyebrow">The actual obsession</div><h2>Agentic systems that do work</h2></div>
-          <p>I’m interested in the engineering layer after “call an LLM”: coordination, tools, permissions, state, routing, evaluation, observability, and recovery.</p>
-        </div>
-        <div class="grid">
-          <div class="card agent-card wide reveal"><div class="num">01 / ORCHESTRATION</div><h3>Multi-agent execution</h3><p>Planner, worker, checker, critic, and boss patterns where roles are separated on purpose. Agents communicate through explicit state and evidence instead of trusting each other’s summaries.</p><div class="chips"><span class="chip">task graphs</span><span class="chip">agent-to-agent</span><span class="chip">durable state</span><span class="chip">rework loops</span><span class="chip">human override</span></div></div>
-          <div class="card agent-card reveal"><div class="num">02 / TOOLS</div><h3>Real tool use</h3><p>Filesystem, shell, Git, APIs, search, tests, and structured actions behind permission boundaries—not agents role-playing that they changed something.</p><div class="chips"><span class="chip">MCP-style tools</span><span class="chip">sandboxing</span><span class="chip">approvals</span></div></div>
-          <div class="card agent-card reveal"><div class="num">03 / ROUTING</div><h3>Model routing</h3><p>Use the cheapest, fastest model that can reliably complete the next step, then escalate when evidence says it should.</p><div class="chips"><span class="chip">local models</span><span class="chip">cloud models</span><span class="chip">cost-aware</span></div></div>
-          <div class="card agent-card wide reveal"><div class="num">04 / VERIFICATION</div><h3>Trust is not a test strategy</h3><p>Independent checking, test execution, diff inspection, acceptance criteria, retry budgets, and escalation. The goal is not more agent chatter; it is a higher probability that the artifact at the end actually works.</p><div class="chips"><span class="chip">evals</span><span class="chip">independent checker</span><span class="chip">failure recovery</span><span class="chip">evidence-first</span></div></div>
-          <div class="card agent-card reveal"><div class="num">05 / MEMORY</div><h3>Long-running work</h3><p>Resumable sessions, checkpoints, compacted context, project memory, and progress state so agents can survive work that lasts longer than one prompt.</p><div class="chips"><span class="chip">checkpoints</span><span class="chip">resume</span><span class="chip">context control</span></div></div>
-        </div>
-      </div>
-    </section>
+    <section id="agents"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">The operating model</div><h2>Agents do the loop. Humans own the system.</h2></div><p>I’m interested in the engineering layer after “call an LLM”: coordination, tools, permissions, state, routing, evaluation, observability, recovery — and explicit places where human judgment enters the system.</p></div><div class="grid">
+      <div class="card agent-card wide reveal"><div class="num">01 / ORCHESTRATION</div><h3>Multi-agent execution</h3><p>Planner, worker, checker, critic, and boss patterns where roles are separated on purpose. Agents communicate through explicit state and evidence instead of trusting each other’s summaries.</p><div class="chips"><span class="chip">task graphs</span><span class="chip">agent-to-agent</span><span class="chip">durable state</span><span class="chip">rework loops</span><span class="chip">human escalation</span></div></div>
+      <div class="card agent-card reveal"><div class="num">02 / TOOLS</div><h3>Real tool use</h3><p>Filesystem, shell, Git, APIs, search, tests, and structured actions behind permission boundaries — not agents role-playing that they changed something.</p><div class="chips"><span class="chip">MCP-style tools</span><span class="chip">sandboxing</span><span class="chip">approvals</span></div></div>
+      <div class="card agent-card reveal"><div class="num">03 / ROUTING</div><h3>Model routing</h3><p>Use the cheapest, fastest model that can reliably complete the next step, then escalate when evidence says it should.</p><div class="chips"><span class="chip">local models</span><span class="chip">cloud models</span><span class="chip">cost-aware</span></div></div>
+      <div class="card agent-card wide reveal"><div class="num">04 / VERIFICATION</div><h3>Trust is not a test strategy</h3><p>Independent checking, test execution, diff inspection, acceptance criteria, retry budgets, and escalation. The goal is not more agent chatter; it is a higher probability that the artifact at the end actually works.</p><div class="chips"><span class="chip">evals</span><span class="chip">independent checker</span><span class="chip">failure recovery</span><span class="chip">evidence-first</span></div></div>
+      <div class="card agent-card reveal"><div class="num">05 / HUMAN LOOP</div><h3>Judgment at the edge</h3><p>Humans define intent, approve high-impact actions, resolve ambiguity, change priorities, and accept the final result. Automation should compress work without erasing accountability.</p><div class="chips"><span class="chip">intent</span><span class="chip">approval</span><span class="chip">override</span><span class="chip">accountability</span></div></div>
+    </div></div></section>
 
-    <section id="factory">
-      <div class="wrap">
-        <div class="factory reveal">
-          <div class="section-head" style="margin-bottom:0">
-            <div><div class="eyebrow">Software factory</div><h2>From idea to tested artifact</h2></div>
-            <p>I’m building repeatable pipelines where an agent team can inspect a repo, plan the work, implement it, test it, review it, and hand back a coherent change—not a folder full of generated sludge.</p>
-          </div>
-          <div class="factory-grid">
-            <div class="stage"><div class="snum">01</div><b>UNDERSTAND</b><span>repo scan, requirements, constraints</span></div>
-            <div class="stage"><div class="snum">02</div><b>PLAN</b><span>task graph, interfaces, acceptance criteria</span></div>
-            <div class="stage"><div class="snum">03</div><b>BUILD</b><span>tool-using workers implement small units</span></div>
-            <div class="stage"><div class="snum">04</div><b>VERIFY</b><span>tests, reviewers, independent checks</span></div>
-            <div class="stage"><div class="snum">05</div><b>SHIP</b><span>clean diff, docs, PR, recoverable state</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section id="factory"><div class="wrap"><div class="factory reveal"><div class="section-head" style="margin-bottom:0"><div><div class="eyebrow">Software factory</div><h2>From human intent to tested artifact</h2></div><p>I’m building repeatable pipelines where a person frames the problem and an agent team can inspect a repo, plan the work, implement it, test it, review it, and hand back a coherent change — with escalation when the system reaches a judgment call.</p></div><div class="factory-grid"><div class="stage"><div class="snum">01</div><b>FRAME</b><span>goal, constraints, human intent</span></div><div class="stage"><div class="snum">02</div><b>PLAN</b><span>task graph, interfaces, acceptance criteria</span></div><div class="stage"><div class="snum">03</div><b>BUILD</b><span>tool-using workers implement small units</span></div><div class="stage"><div class="snum">04</div><b>VERIFY</b><span>tests, reviewers, independent checks</span></div><div class="stage"><div class="snum">05</div><b>DECIDE + SHIP</b><span>human review, clean diff, PR, recoverable state</span></div></div></div></div></section>
 
-    <section id="work">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <div><div class="eyebrow">Public proof</div><h2>Things I’ve shipped</h2></div>
-          <p>The strongest proof is executable. These are public projects and products, not architecture diagrams detached from code.</p>
-        </div>
-        <div class="grid">
-          <a class="card project reveal" href="https://github.com/weeksdev/junebug-cli" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Flagship · coding agent</div><h3>Junebug CLI</h3><p>A Rust, local-first coding agent with provider-neutral model support, permission modes, checkpoints, resumable sessions, hardware-aware local model selection, adaptive routing, and multi-model swarms with independent verification.</p><div class="chips"><span class="chip">Rust</span><span class="chip">coding agents</span><span class="chip">model swarms</span><span class="chip">local LLMs</span></div></a>
-          <a class="card project reveal" href="https://github.com/weeksdev/agento" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Multi-agent platform</div><h3>Agento</h3><p>A full-stack platform for human-to-agent and agent-to-agent collaboration with custom agents, real-time team chat, persistent history, extensible tools, and multiple cloud or local model providers.</p><div class="chips"><span class="chip">FastAPI</span><span class="chip">React</span><span class="chip">WebSockets</span><span class="chip">LiteLLM</span></div></a>
-          <a class="card project reveal" href="https://github.com/weeksdev/signal_dark" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Systems-heavy game</div><h3>Signal Dark</h3><p>A Godot stealth-action game with authored zones, seeded arcade runs, signal and visibility mechanics, hacking, multiple enemy behaviors, and macOS/iOS build paths.</p><div class="chips"><span class="chip">Godot 4</span><span class="chip">procedural systems</span><span class="chip">game dev</span></div></a>
-          <a class="card project reveal" href="https://audioze.net" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">AI audio product</div><h3>Audioze</h3><p>Musician tooling that takes AI audio processing all the way to practical output: stem separation, BPM/key analysis, and DAW-ready workflows.</p><div class="chips"><span class="chip">AI audio</span><span class="chip">GPU processing</span><span class="chip">music tech</span></div></a>
-          <a class="card project reveal" href="https://github.com/weeksdev/acuity-dark-research" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Research-driven DX</div><h3>Acuity Dark Research</h3><p>A VS Code theme designed from measured contrast, semantic redundancy, color-vision simulation, and reproducible palette auditing instead of aesthetic guesswork.</p><div class="chips"><span class="chip">accessibility</span><span class="chip">developer experience</span><span class="chip">Python</span></div></a>
-          <a class="card project reveal" href="https://resumeretriever.com" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Applied AI product</div><h3>Resume Retriever</h3><p>An AI workflow that tailors resumes to job descriptions, optimizes for ATS screening, and outputs editable Word or PDF artifacts.</p><div class="chips"><span class="chip">Next.js</span><span class="chip">FastAPI</span><span class="chip">applied AI</span></div></a>
-        </div>
-      </div>
-    </section>
+    <section id="work"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow">Public proof</div><h2>Things I’ve shipped</h2></div><p>The strongest proof is executable. These are public projects and products, not architecture diagrams detached from code.</p></div><div class="grid">
+      <a class="card project reveal" href="https://github.com/weeksdev/junebug-cli" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Flagship · coding agent</div><h3>Junebug CLI</h3><p>A Rust, local-first coding agent with provider-neutral model support, permission modes, checkpoints, resumable sessions, hardware-aware local model selection, adaptive routing, and multi-model swarms with independent verification.</p><div class="chips"><span class="chip">Rust</span><span class="chip">coding agents</span><span class="chip">model swarms</span><span class="chip">local LLMs</span></div></a>
+      <a class="card project reveal" href="https://github.com/weeksdev/agento" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Multi-agent platform</div><h3>Agento</h3><p>A full-stack platform for human-to-agent and agent-to-agent collaboration with custom agents, real-time team chat, persistent history, extensible tools, and multiple cloud or local model providers.</p><div class="chips"><span class="chip">FastAPI</span><span class="chip">React</span><span class="chip">WebSockets</span><span class="chip">LiteLLM</span></div></a>
+      <a class="card project reveal" href="https://github.com/weeksdev/signal_dark" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Systems-heavy game</div><h3>Signal Dark</h3><p>A Godot stealth-action game with authored zones, seeded arcade runs, signal and visibility mechanics, hacking, multiple enemy behaviors, and macOS/iOS build paths.</p><div class="chips"><span class="chip">Godot 4</span><span class="chip">procedural systems</span><span class="chip">game dev</span></div></a>
+      <a class="card project reveal" href="https://audioze.net" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">AI audio product</div><h3>Audioze</h3><p>Musician tooling that takes AI audio processing all the way to practical output: stem separation, BPM/key analysis, and DAW-ready workflows.</p><div class="chips"><span class="chip">AI audio</span><span class="chip">GPU processing</span><span class="chip">music tech</span></div></a>
+      <a class="card project reveal" href="https://github.com/weeksdev/acuity-dark-research" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Research-driven DX</div><h3>Acuity Dark Research</h3><p>A VS Code theme designed from measured contrast, semantic redundancy, color-vision simulation, and reproducible palette auditing instead of aesthetic guesswork.</p><div class="chips"><span class="chip">accessibility</span><span class="chip">developer experience</span><span class="chip">Python</span></div></a>
+      <a class="card project reveal" href="https://resumeretriever.com" target="_blank" rel="noopener"><span class="arrow">↗</span><div class="kicker">Applied AI product</div><h3>Resume Retriever</h3><p>An AI workflow that tailors resumes to job descriptions, optimizes for ATS screening, and outputs editable Word or PDF artifacts.</p><div class="chips"><span class="chip">Next.js</span><span class="chip">FastAPI</span><span class="chip">applied AI</span></div></a>
+    </div></div></section>
 
-    <section id="career">
-      <div class="wrap career">
-        <div class="reveal">
-          <div class="eyebrow">Why enterprise experience matters</div>
-          <h2>Agents are software systems.</h2>
-          <p>I’ve spent nearly two decades building and leading production engineering in financial services. That means reliability, permissions, auditability, observability, failure modes, and real operational consequences are not theoretical concerns.</p>
-          <p>That background is exactly how I approach agentic AI: not as a clever prompt, but as a distributed system with probabilistic components.</p>
-          <div class="stack"><span>C# / .NET</span><span>Python</span><span>Rust</span><span>TypeScript</span><span>FastAPI</span><span>SQL</span><span>PostgreSQL</span><span>LLM systems</span><span>distributed systems</span><span>automation</span></div>
-        </div>
-        <div class="timeline reveal">
-          <div class="job"><div class="date">Current · Dallas–Fort Worth</div><h3>Director, Software / Data Engineering — Risk</h3><div class="company">Charles Schwab</div><p>Engineering leadership across production platforms, automation, data infrastructure, and ML-enabling systems, while staying close enough to implementation to know where architecture meets reality.</p></div>
-          <div class="job"><div class="date">Builder track · ongoing</div><h3>Agent systems + developer tooling</h3><div class="company">@weeksdev</div><p>Coding agents, model routing, multi-agent orchestration, evaluation loops, local-model workflows, creative AI tooling, and software-factory experiments.</p></div>
-        </div>
-      </div>
-    </section>
+    <section id="career"><div class="wrap career"><div class="reveal"><div class="eyebrow">Why enterprise experience matters</div><h2>Autonomy needs boundaries.</h2><p>I’ve spent nearly two decades building and leading production engineering in financial services. Reliability, permissions, auditability, observability, failure modes, and real operational consequences are not theoretical concerns.</p><p>That background is exactly how I approach agentic AI: not as a clever prompt, but as a distributed system with probabilistic components — with humans deliberately placed where consequence exceeds confidence.</p><div class="stack"><span>C# / .NET</span><span>Python</span><span>Rust</span><span>TypeScript</span><span>FastAPI</span><span>SQL</span><span>PostgreSQL</span><span>LLM systems</span><span>distributed systems</span><span>automation</span></div></div><div class="timeline reveal"><div class="job"><div class="date">Current · Dallas–Fort Worth</div><h3>Director, Software / Data Engineering — Risk</h3><div class="company">Charles Schwab</div><p>Engineering leadership across production platforms, automation, data infrastructure, and ML-enabling systems, while staying close enough to implementation to know where architecture meets reality.</p></div><div class="job"><div class="date">Builder track · ongoing</div><h3>Agent systems + developer tooling</h3><div class="company">@weeksdev</div><p>Coding agents, model routing, multi-agent orchestration, evaluation loops, local-model workflows, creative AI tooling, and software-factory experiments.</p></div></div></div></section>
 
-    <section id="contact">
-      <div class="wrap">
-        <div class="cta reveal">
-          <div><div class="eyebrow">Compare notes / build something</div><h2>Working on agents that need to do more than chat?</h2><p>I’m especially interested in coding agents, software factories, agent orchestration, model routing, evaluation, long-running workflows, and the infrastructure that turns probabilistic models into dependable systems.</p></div>
-          <div class="actions"><a class="btn primary" href="https://www.linkedin.com/in/andrew-weeks-12a3377/" target="_blank" rel="noopener">Message me ↗</a><a class="btn" href="https://github.com/weeksdev" target="_blank" rel="noopener">Browse GitHub ↗</a></div>
-        </div>
-      </div>
-    </section>
+    <section id="contact"><div class="wrap"><div class="cta reveal"><div><div class="eyebrow">Compare notes / build something</div><h2>Automate the work. Keep the judgment.</h2><p>I’m especially interested in coding agents, software factories, agent orchestration, model routing, evaluation, long-running workflows, and the infrastructure that makes human-directed autonomy dependable.</p></div><div class="actions"><a class="btn primary" href="https://www.linkedin.com/in/andrew-weeks-12a3377/" target="_blank" rel="noopener">Message me ↗</a><a class="btn" href="https://github.com/weeksdev" target="_blank" rel="noopener">Browse GitHub ↗</a></div></div></div></section>
   </main>
-
-  <footer><div class="wrap foot"><div>Andrew Weeks · @weeksdev · DFW, Texas</div><span>Build the system. Give it tools. Make it prove the work.</span></div></footer>
-
+  <footer><div class="wrap foot"><div>Andrew Weeks · @weeksdev · DFW, Texas</div><span>Human intent. Agent leverage. Verified output.</span></div></footer>
   <script>
-    const logs=[
-      ['14:32:08','planner → 6 tasks created',''],
-      ['14:32:11','router → local:qwen / task 01','route'],
-      ['14:32:37','checker → tests passed ✓','ok'],
-      ['14:32:39','orchestrator → continue ✓','ok'],
-      ['14:33:04','worker → patch ready',''],
-      ['14:33:12','checker → regression found / rework','route'],
-      ['14:33:45','worker → fix applied',''],
-      ['14:33:57','checker → acceptance criteria passed ✓','ok']
-    ];
-    let offset=0;
-    const el=document.getElementById('eventlog');
-    function renderLog(){const rows=[];for(let j=0;j<4;j++){const x=logs[(offset+j)%logs.length];rows.push(`<span class="time">${x[0]}</span> <span class="${x[2]}">${x[1]}</span>`)}el.innerHTML=rows.join('<br>');offset=(offset+1)%logs.length}
-    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(renderLog,2400);
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('on');observer.unobserve(entry.target)}})},{threshold:.12});
-    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+    const logs=[['14:32:08','human → goal + constraints approved','humanlog'],['14:32:11','planner → 6 tasks created',''],['14:32:37','checker → tests passed ✓','ok'],['14:32:39','orchestrator → request human decision','humanlog'],['14:33:04','human → accept approach B','humanlog'],['14:33:12','worker → patch ready',''],['14:33:45','checker → regression found / rework','route'],['14:33:57','human → final diff approved ✓','humanlog']];let offset=0;const el=document.getElementById('eventlog');function renderLog(){const rows=[];for(let j=0;j<4;j++){const x=logs[(offset+j)%logs.length];rows.push(`<span class="time">${x[0]}</span> <span class="${x[2]}">${x[1]}</span>`)}el.innerHTML=rows.join('<br>');offset=(offset+1)%logs.length}if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(renderLog,2400);const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('on');observer.unobserve(entry.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
   </script>
 </body>
 </html>
